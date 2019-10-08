@@ -64,7 +64,11 @@ namespace mDNSResolver {
 
   void Resolver::query(const char* name) {
     Query query(name);
+#ifdef ESP32
+    // TODO: code for ESP32
+#else
     udp.beginPacketMulticast(MDNS_BROADCAST_IP, MDNS_PORT, localIP, UDP_TIMEOUT);
+#endif
     query.sendPacket(udp);
     udp.endPacket();
   }
@@ -86,7 +90,11 @@ namespace mDNSResolver {
 
     if(!init) {
       init = true;
+#ifdef ESP32
+      // TODO: code for ESP32
+#else
       udp.beginMulticast(localIP, MDNS_BROADCAST_IP, MDNS_PORT);
+#endif
     }
 
     unsigned int len = udp.parsePacket();
